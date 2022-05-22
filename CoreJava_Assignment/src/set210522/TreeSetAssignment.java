@@ -73,7 +73,7 @@ public class TreeSetAssignment {
 		// 8. retrieve and remove lowest element
 		// using single method call
 		System.out.println("friends : "+friends);
-		friends.remove(friends.first());
+		friends.pollFirst();
 		System.out.println("after remove lowest element");
 		System.out.println("friends : "+friends);
 
@@ -87,7 +87,7 @@ public class TreeSetAssignment {
 		// 9. retrieve and remove highest element
 		// using single method call
 		System.out.println("friends : "+friends);
-		friends.remove(friends.last());
+		friends.pollLast();
 		System.out.println("after remove highest element");
 		System.out.println("friends : "+friends);
 
