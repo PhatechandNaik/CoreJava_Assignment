@@ -1,0 +1,58 @@
+#SIMPLE SELECT QUERY
+#--------------------
+#1) WAQ to display the names (first_name, last_name) and salary for all employees whose
+	#salary is not in the range $10,000 through $15,000.
+
+	select first_name, last_name, salary from employees
+	where salary not between 10000 and 15000;
+
+#2) WAQ to display the names(first_name, last_name) and department id of all employes in 
+	#departments 30 or 100 in ascending alphabetical oreder by department id.
+
+	select first_name, last_name, department_id from employees 
+	where department_id in (30,100) 
+	order by first_name, department_id;
+
+#3) WAQ to display the names(first_name, last_name) and salary for all employees whose salary not
+	#in the range $10,000 through $15,000 and in department 30 or 100.
+
+	select first_name, last_name, salary
+	where salary not between 10000 and 15000 
+	and department_id in (30,100);
+
+#4) WAQ to display the names(first_name, last_name) and hire date for all employees who were hired in 1987
+
+	select first_name, last_name, hire_date from employees
+	where hire_date likes '1987%';
+
+#5) WAQ to display the first_name of all employees who have both 'b' and 'c' in their first_name
+	
+	select first_name from employees where first_name likes '%b%' and first_name likes '%c%';
+
+#6) WAQ to display the last nama, job, and salary for all employees whose job is that of a programmer or
+	#a shipping clerk, and whose salary is not equal to $4,500, $10,000 or $15,000.
+
+	select last_name, job_id, salary from employees
+	where job_d in ('programmer','shipping clerk')
+	and salary not in (4500, 10000, 15000);
+
+#7) WAQ to display the last names of employees whose names has exactly 6 character
+
+	select last_name from employees where last_name likes '------';
+
+#8) WAQ to display the last names of employees having 'e' as the tird character
+
+	select last_name from employees where last_name likes '--e%';
+
+#9) WAQ to display the jobs/designations available in the employees table
+
+	select distinct(job_id) as 'jobs' from employees;
+
+#10) WAQ to display the names(first_name, last_name), salary and PF (15% of salary) of all employees
+
+	select first_name, last_name, salary, salary*15/100 as PF from employees;
+
+#11) WAQ to select all records from employees where last name in 'BLAKE', 'SCOTT', 'KING', 'FORD'.
+
+	select * from employees where last_name in ('BLAKE', 'SCOTT', 'KING', 'FORD');
+

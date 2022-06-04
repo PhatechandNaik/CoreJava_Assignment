@@ -1,0 +1,73 @@
+#AGGREGATE FUNCTIONS AND GROUP BY ASSIGNMENT
+#-------------------------------------------
+#1) WAQ to list the number of jobs available in the employees table
+
+	select distinct(job_id) as jobs from employees;
+
+#2) WAQ to get the total salaries payable to employees
+
+	select sum(salary) 'total salary' from employees;
+
+#3) WAQ to get the minimum salary from employees table
+
+	select min(salary) 'minimum salary' from employees;
+
+#4) WAQ to get the maximum salary of an employee working as a programmer
+
+	select max(salary) 'maximum salary' from employees where job_id='programmer';
+
+#5) WAQ to get the average salary and number of employees working the department 90.
+
+	select avg(salary) 'average salary' , count(*) 'no of employees' from employees
+	where department_id = 90;
+
+#6) WAQ to get the highest , lowest, sum , and average salary of all employees
+
+	select max(salary) 'highest', min(salary) 'lowest', sum(salary) 'total', avg(salary) 'average'
+	from employees;
+
+#7) WAQ to get the no of employees with the same job
+
+	select job_id, count(*) 'no of employees' from employees
+	group by job_id 
+	having job_id is not null;
+
+#8) WAQ to get the difference between highest and lowest salaries
+
+	select max(salary) - min(salary) as 'diff salary' from employees;
+
+#9) WAQ to find the manager ID and the salary of the lowest-paid employee for that manager
+
+	select manager_id , min(salary) 'lowest sal' from employees
+	group by manager_id;
+
+#10) WAQ to get the department ID and the total salary payable in each department
+
+	select department_id, sum(salary) 'total sal' from employees
+	group by department_id;
+
+#11) WAQ to the average salary for each job ID excluding programmer
+
+	select job_id, avg(salary) 'average sal' from employees
+	group by job_id
+	having job_id != 'programmer';
+
+#12) WAQ to get the total salary, maximum, minimum, average salary of employees
+	#(job_id wise), for department id 90 only
+
+	select sum(salary), max(salary), min(salary), avg(salary) from employees
+	where department_id = 90
+	group by gob_id;
+
+#13) WAQ to get the job ID and maximum salary of the employees where maximum salary is greater than 
+	#or equal to $4,000.
+
+	select job_id, max(salary) 'max sal' from employees
+	group by job_id
+	having max(salary)>=4000;
+
+#14) WAQ to get the average salary for all departments employing more than 10 employees
+
+	select department_id, avg(salary) 'average sal' from employees
+	group by department_id
+	having count(*)>10;

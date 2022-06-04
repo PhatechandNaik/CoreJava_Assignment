@@ -1,0 +1,88 @@
+#BASIC SELECT STATEMENTS
+#-----------------------
+#1) WAQ to display the names (first_name, last_name) using alias name "First Name","Last Name"
+
+	select first_name 'First Name', last_name 'Last Name' from employees;
+
+#2) WAQ to get uniqueue department id from employee table
+
+	select distinct(department_id) from employees;
+
+#3) WAQ to get all employee details from the employee table order by frist name descending
+
+	select * from employees order by first_name desc;
+
+#4) WAQ to get the (first_name, last_name), salary, PF of all the employees
+	(PF is calculated as 12% of salary )
+	
+	select first_name, last_name, salary, salary*0.12 as PF from employees;
+
+#5) WAQ to get the employee ID, names (first_name,last_name), salary in ascending order of salary
+
+	select employee_id, first_name, last_name, salary from employees
+	order by salary;
+
+#6) WAQ to get the total salaries payable to employees
+	
+	select sum(salary) as 'total salary' from employees;
+
+#7) WAQ to get the maximum and minimum salaries from employees table
+
+	select max(salary) 'maximum salary', min(salary) 'minimum salary' from employees;
+
+#8) WAQ to get the average salary and no of employees in employees table
+
+	select avg(salary) 'average salary', count(*) 'total employees' from employees;
+
+#9) WAQ to get the no of employees working with the company
+
+	select count(*) 'total employees' from employees;
+
+#10) WAQ to get the no of jobs available in the employees table
+
+	select count(distinct(job_id)) 'no of jobs' from employees;
+
+#11) WAQ to get all first name from employees table in upper case;
+	
+	select upper(first_name) 'First Name' from employees;
+
+
+#12) WAQ to get the first 3 characters of first name from employees table
+
+	select substr(first_name,1,3) from employees;
+
+
+#13) WAQ to calculate 171*214+625
+
+	select 171*214+625 from dual;
+
+	
+
+#14) WAQ to get the names( for example Ellen Abel, Sundar Ande etc. ) of all the employees from employees table
+
+	select concat(first_name, last_name) 'Full Name' from employees;
+
+
+#15) WAQ to get first name from employees table after removing white spaces from both sides
+
+	select trim(first_name) 'First Name' from employees;
+
+
+#16) WAQ to get the length of the employee names(first_name, last_name) from employees table
+
+	select first_name, len(first_name) 'length', last_name, len(last_name) 'length' from employees;
+
+
+#17) WAQ to check if first_name fields of the employees table contains number
+
+	
+
+#18) WAQ to select first 10 records from table
+
+	select * from employees limit 10;
+
+#19) WAQ to get monthly salary (round two decimal places) of each and every employees
+
+	
+	
+
