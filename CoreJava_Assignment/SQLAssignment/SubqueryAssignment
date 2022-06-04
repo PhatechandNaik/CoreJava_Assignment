@@ -1,0 +1,85 @@
+#SUB QUERY ASSIGNMENT
+#---------------------
+select * from employees;
+#1) 
+	select first_name, last_name, salary from employees
+	where salary>(select salary from employees where last_name = "Bull");
+
+#2) 
+	select first_name, last_name from employees where department_id = 
+	(select department_id from departments where department_name = "IT" );
+
+#3) 
+	select first_name, last_name from employees where employee_id in 
+	(select manager_id from departments);
+
+#4) 
+	select first_name, last_name, salary from employees where salary > 
+	(select avg(salary) from employees);
+
+#5) 
+	select e1.first_name, e1.last_name, e1.salary from employees e1 join jobs j 
+	on e1.job_id = j.job_id 
+	where e1.salary = j.min_salary;
+
+#6) 
+
+#7) 
+	select first_name, last_name, salary from employees where salary > 
+	(select salary from employees where last_name = "scott");
+
+#8) 
+	select first_name, last_name, salary from employees where salary = 
+	(select min(salary) from employees);
+
+#9) 
+	select first_name, last_name, salary from employees where salary = 
+	(select avg(salary) from employees);
+
+#10) 
+	select first_name, last_name, salary from employees where salary > 
+	(select max(salary) from employees where job_id="SH_CLERK")
+	order by salary;
+
+#11) 
+	select first_name, last_name from employees where employee_id not in 
+	(select manager_id from departments);
+
+#12) 
+	select e.employee_id, e.first_name, e.last_name, d.department_name  from employees e 
+	join departments d on e.department_id = d.department_id;
+
+#13) 
+	select employee_id, first_name, last_name, salary from employees
+	group by department_id
+	having salary> avg(salary);
+
+#14) 
+	select * from employees where employee_id%2=0;
+
+#15) 
+	select distinct salary from employees e1 where 4 = 
+	(select count(distinct salary) from employees e2 where e2.salary>e1.salary);
+
+#16) 
+	select distinct salary from employees e1 where 3 = 
+	(select count(distinct salary) from employees e2 where e2.salary<e1.salary);
+
+#17) 
+	select * from employees order by employee_id desc limit 10;
+
+#18) 
+	select department_id, department_name from departments where department_id not in
+	(select distinct department_id from employees where department_id is not null);
+
+#19) 
+	select distinct salary from employees order by salary desc limit 3;
+
+#20) 
+	select distinct salary from employees order by salary  limit 3;
+
+#21) 
+	select distinct salary from employees e1 where n = 
+	(select count(distinct salary) from employees e2 where e2.salary>e1.salary);
+
+

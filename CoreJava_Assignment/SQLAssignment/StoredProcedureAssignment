@@ -1,0 +1,85 @@
+use mydb;
+delimiter $$
+create procedure factorial(in num int,out fact int)
+begin
+    set fact = 1;
+    while num>=1 do
+		set fact = fact * num;
+        set num = num - 1;
+	end while;
+end $$
+delimiter ;
+call factorial (5,@fact);
+select @fact;
+
+
+delimiter $$
+create procedure checkevenodd (in num int, out ans varchar (4))
+begin
+	if num%2=0 then
+		set ans = "even";
+	else 
+		set ans = "odd";
+	end if;
+end$$
+delimiter ;
+call checkevenodd(4,@ans);
+select @ans;
+
+
+delimiter $$
+create procedure totalemployeeofdepartment(in did int, out total int)
+begin
+	select count(*) into total from t_employee 
+    where deptid = did;
+end $$
+delimiter ;
+call totalemployeeofdepartment(10,@emps);
+select @emps;
+
+
+delimiter $$
+create procedure totalemployeeandaveragesalary(in did int, out total int, out average float)
+begin
+	select count(*), avg(sal) into total,average from t_employee
+    where deptid = did;
+end $$
+delimiter ;
+
+call totalemployeeandaveragesalary(10,@total,@average);
+select @total,@average;
+
+
+drop procedure if exists datewithweekday;
+delimiter $$
+create procedure datewithweekday(in wday int)
+begin
+	declare yr int;
+    declare mon int;
+    declare dates varchar (100);
+    declare startdate date;
+    declare enddate date;
+    set dates = "";
+	set yr = year(current_date());
+    set mon = month(current_date());
+    if mon<10 then
+		set startdate = concat(yr,"0",mon,"01");
+		set mon = mon+1;
+		set enddate = concat(yr,"0",mon,"01");
+	else 
+		set startdate = concat(yr,mon,"01");
+		set mon = mon+1;
+		set enddate = concat(yr,mon,"01");
+	end if;
+	
+    while startdate<enddate do
+		if weekday(startdate)= wday then
+			set dates = concat(dates,",",startdate);
+		end if;
+        set startdate = date_add(startdate,interval 1 day);
+	end while;
+    select dates;
+end $$
+delimiter ;
+
+call datewithweekday(4);
