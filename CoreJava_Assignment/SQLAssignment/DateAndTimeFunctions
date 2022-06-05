@@ -1,0 +1,213 @@
+#Q1)
+
+delimiter $$
+create function displayFirstdayOf3MonthsBeforeCurrentMonth()
+returns varchar (10) deterministic
+begin
+	declare mon int ;
+    declare yr int;
+    declare first_date date;
+    
+    set mon = month(current_date());
+    set yr = year(current_date());
+    
+	if mon > 3 then
+		set mon = mon - 3;
+        set first_date = concat(yr,"0",mon,"01");
+	else
+		set mon = 9 + mon;
+        set yr = yr - 1;
+        set first_date = concat(yr,mon,"01");
+	end if;
+    return dayname(first_date);
+    
+end $$
+delimiter ;
+
+select displayFirstdayOf3MonthsBeforeCurrentMonth();
+
+#Q2)
+
+delimiter $$
+create function displayLastdayOf3MonthsBeforeCurrentMonth()
+returns varchar (10) deterministic
+begin
+	declare mon int ;
+    declare yr int;
+    declare first_date date;
+    declare last_date date;
+    
+    set mon = month(current_date());
+    set yr = year(current_date());
+    
+	if mon > 2 then
+		set mon = mon - 2;
+        set first_date = concat(yr,"0",mon,"01");
+	else
+		set mon = 10 + mon;
+        set yr = yr - 1;
+        set first_date = concat(yr,mon,"01");
+	end if;
+    set last_date = date_sub(first_date, interval 1 day);
+    return dayname(last_date);
+    
+end $$
+delimiter ;
+
+select displayLastdayOf3MonthsBeforeCurrentMonth();
+
+#Q3)
+
+select distinct hire_date from employees
+where dayname(hire_date) = "monday";
+
+#Q4)
+
+delimiter $$
+create function getFirstdayOfCurrentYear()
+returns varchar (10) deterministic
+begin
+	declare first_date date;
+    declare yr int;
+    set yr = year(current_date());
+    set first_date = concat(yr,"0101");
+    return dayname(first_date);
+end $$
+delimiter ;
+
+select getFirstdayOfCurrentYear();
+
+#Q5)
+
+delimiter $$
+create function getLastdayOfCurrentYear()
+returns varchar (10) deterministic
+begin
+	declare last_date date;
+    declare yr int;
+    set yr = year(current_date());
+    set last_date = concat(yr,"1231");
+    return dayname(last_date);
+end $$
+delimiter ;
+
+select getLastdayOfCurrentYear();
+
+#Q6)
+
+delimiter $$
+create function getAgeInYear(birth_date date)
+returns int deterministic
+begin
+    declare age int;
+    set age = timestampdiff(year, birth_date, current_date());
+    return age;
+end $$
+delimiter ;
+
+select getAgeInYear("20210606");
+
+#Q7)
+
+select concat(date_format(current_date(),"%M %d, %Y") )"date";
+
+#Q8)
+
+select concat(dayname(current_date())," ",
+date_format(current_date(),"%M %Y")) "date";
+
+#Q9)
+
+select year(current_date()) ;
+
+#Q10)
+
+delimiter $$
+create function calculatedatefromtotaldays(days int)
+returns date deterministic
+begin
+	return date_sub(current_date(), interval days day);
+end $$
+delimiter ;
+
+select calculatedatefromtotaldays(7306);
+
+#Q11)
+
+select first_name, hire_date from employees
+where hire_date between "19870601" and "19870730";
+
+#Q12)
+
+select concat(dayname(current_date())," ",
+date_format(current_date(), "%D %M %Y")," ",
+current_time()) "date time ";
+
+#Q13)
+
+select date_format(current_date(), "%d/%m/%Y") "current date";
+
+#Q14)
+
+delimiter $$
+create function currenttimein12hrformat()
+returns varchar (10) deterministic
+begin
+	declare hr int;
+    declare min int;
+    declare t varchar (10);
+    set t = "";
+    set hr = lpad(hour(current_time()),2,0);
+    set min = lpad(minute(current_time()),2,0);
+    if hr<12 then
+		set t = concat(hr,":",min," AM");
+	elseif hr>12 then
+		set hr = hr % 12;
+        set hr = lpad(hr,2,0);
+		set t = concat(hr,":",min," PM");
+	elseif hr = 12 and min = 0 then
+		set t = concat(hr,":",min," AM");
+	else
+		set t = concat(hr,":",min," PM");
+    end if;
+    return t;
+end $$
+delimiter ;
+
+select concat(currenttimein12hrformat()," ",
+date_format(current_date(),"%M %d, %Y")) "time date";
+
+#Q15)
+
+select first_name, last_name from employees
+where monthname(hire_date) = "june";
+
+#Q16)
+
+select year(hire_date) "year" from employees
+group by year(hire_date)
+having count(*)>10;
+
+#Q17)
+
+select first_name from employees
+where hire_date like "1987%";
+
+#Q18)
+
+select d.department_id, m.first_name, m.salary from employees m 
+join departments d on m.employee_id = d.manager_id;
+
+#Q19)
+
+select employee_id, last_name,
+ date_add(hire_date, interval 1 month) "first salary date" 
+ from employees;
+ 
+ #20)
+ 
+ select first_name, hire_date,
+ timestampdiff(year, hire_date, current_date()) as "experience"
+ from employees;
+ 
+ 

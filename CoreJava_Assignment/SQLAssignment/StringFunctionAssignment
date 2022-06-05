@@ -1,0 +1,47 @@
+use hr;
+#Q1)
+select job_id,group_concat(employee_id) from employees
+group by job_id;
+
+#Q2)
+update employees set phone_number = replace(phone_number,"124","999");
+
+#Q3)
+select * from employees where length(first_name)>=8;
+
+#Q4)
+select * from jobs;
+select lpad(min_salary,6,0) "min sal", lpad(max_salary,6,0) "max sal" from jobs;
+
+#Q5)
+update employees set email = replace(email,"@gmail.com","@example.com");
+
+#Q6)
+select employee_id, first_name, hire_date from employees;
+
+#Q7)
+select employee_id, substring(email,1,length(email)-3) from employees;
+
+#Q9)
+select substring(phone_number,7) from employees;
+
+#Q11)
+select * from locations where length(street_address) = 
+(select min(length(street_address)) from locations);
+
+#Q13)
+select length(first_name) from employees where 
+last_name like "__c%";
+
+#Q14)
+select first_name, length(first_name) "length" from employees
+where first_name like "A%" 
+or first_name like "J%"
+or first_name like "M%"
+order by first_name;
+
+#Q17)
+select first_name, last_name, hire_date from employees
+where hire_date like "%07"
+or hire_date like "____07__";
+
